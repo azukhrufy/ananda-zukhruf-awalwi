@@ -1,0 +1,19 @@
+.top-header{
+    @apply w-full flex absolute top-0 bg-brand-black flex-row h-20 justify-between text-basic-12;
+
+    .header-left{
+        @apply hidden sm:flex flex-grow gap-4 items-center flex-row pl-16 w-full cursor-pointer;
+    }
+
+    .header-right{
+        @apply hidden sm:flex flex-grow justify-end w-full px-3 items-center sm:pr-10 gap-4 cursor-auto;
+    }
+
+    .header-content{
+        @apply flex justify-between items-center w-full px-5 sm:hidden sm:px-20;
+    }
+
+    .header-menu{
+        @apply translate-y-16 left-0 block p-4 overflow-auto absolute w-full bg-brand-black;
+    }
+}

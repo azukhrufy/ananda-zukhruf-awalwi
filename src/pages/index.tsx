@@ -1,13 +1,13 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import { GithubService } from '@/services/GithubServices'
-import { useEffect, useState } from 'react';
-
+import Head from "next/head";
+import Image from "next/image";
+import { GithubService } from "@/services/GithubServices";
+import { useEffect, useState } from "react";
+import TopHeader from "@/components/Navbar/TopHeader";
+import GithubIcon from "../../public/icons/github.svg";
 
 export default function Home() {
   const githubService = new GithubService();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any>();
 
   useEffect(() => {
     async function fetchUserData() {
@@ -17,7 +17,7 @@ export default function Home() {
     }
 
     fetchUserData();
-  },[])
+  }, []);
   return (
     <>
       <Head>
@@ -26,88 +26,31 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+      <main>
+        <TopHeader
+          content={
+            <>
+              <Image src={GithubIcon.src} alt="icon" width={42} height={42} />
+              <h1>Github Viewer</h1>
+            </>
+          }
+        />
+        <div className="content">
+          <div className="profile-container">
+            <div className="image-container">
+              <img src={user?.avatar_url} />
+            </div>
+            <div className="text-container">
+              <h1>{user?.name}</h1>
+              <h3>{user?.login}</h3>
+              <p>{user?.bio}</p>
+            </div>
           </div>
-        </div>
-        <h1 className='text-3xl text-pina-primary-yellow'>
-          tailwind ready
-        </h1>
+          <div className="repo-container">
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
           </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          </a>
         </div>
       </main>
     </>
-  )
+  );
 }
