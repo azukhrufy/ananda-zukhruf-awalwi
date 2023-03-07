@@ -1,9 +1,23 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
+import { GithubService } from '@/services/GithubServices'
+import { useEffect, useState } from 'react';
 
 
 export default function Home() {
+  const githubService = new GithubService();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    async function fetchUserData() {
+      const data = (await githubService.getUserData()).data;
+      setUser(data);
+      console.log(data);
+    }
+
+    fetchUserData();
+  },[])
   return (
     <>
       <Head>
