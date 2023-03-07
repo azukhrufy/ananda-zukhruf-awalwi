@@ -57,6 +57,7 @@ export default function Home() {
           }
         />
         <div className="content">
+        {user.message == 'Not Found' && <div>User Not Found</div>}
           <div className="profile-container">
             <div className="image-container">
               <img src={user.avatar_url} />
@@ -65,19 +66,21 @@ export default function Home() {
               <h1>{user.name}</h1>
               <h3>{user.login}</h3>
               <p>{user.bio}</p>
-              <Button href={user.html_url} className="mt-4 max-w-4xl">
-                See Profile on Github
-              </Button>
+              {user.html_url && (
+                <Button href={user.html_url} className="mt-4 max-w-4xl">
+                  See Profile on Github
+                </Button>
+              )}
             </div>
           </div>
 
           <div className="repo-container">
-            {repoData &&
+            {repoData.length > 0 &&
               repoData.map(
                 (r: any, i: any) =>
                   i >= minIndex &&
                   i <= maxIndex && (
-                    <a href={r.html_url}>
+                    <a key={i} href={r.html_url}>
                       <List key={i}>
                         <h1>{r.name}</h1>
                         <p className="lang">{r.language}</p>
