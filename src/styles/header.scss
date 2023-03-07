@@ -1,5 +1,5 @@
 .top-header{
-    @apply w-full flex absolute top-0 bg-brand-black flex-row h-20 justify-between text-basic-12;
+    @apply w-full flex top-0 bg-brand-black flex-row h-20 justify-between text-basic-12 fixed;
 
     .header-left{
         @apply hidden sm:flex flex-grow gap-4 items-center flex-row pl-16 w-full cursor-pointer;

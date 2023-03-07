@@ -8,4 +8,8 @@ export class GithubService extends Service{
     getUserData(user: string) {
         return this.get(`/users/${user}`, this.response).catch((exception) => this.catch(exception));
     }
+
+    getRepo(user: string){
+        return this.get(`/users/${user}/repos`, this.response).catch((exception) => this.catch(exception));
+    }
 }

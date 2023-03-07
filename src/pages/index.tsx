@@ -4,23 +4,39 @@ import { GithubService } from "@/services/GithubServices";
 import { useEffect, useMemo, useState } from "react";
 import TopHeader from "@/components/Navbar/TopHeader";
 import GithubIcon from "../../public/icons/github.svg";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/state/store";
+import { Pagination } from "antd";
 
 export default function Home() {
   const githubService = new GithubService();
   const [user, setUser] = useState<any>();
+  const [repoData, setRepoData ] = useState<any>([]);
+  const [totalPage, setTotalPage] = useState<number>(0);
+  const [minIndex, setMinIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(0);
+  const [current, setCurrent] = useState(1);
   const searchUser = useSelector((state: RootState) => state.searchUser.searchUserData);
 
   useEffect(() => {
     async function fetchUserData() {
       const data = (await githubService.getUserData(searchUser)).data;
+      const repo = (await githubService.getRepo(searchUser)).data;
       setUser(data);
+      setRepoData(repo);
+      setTotalPage(repo.length/5);
+      setMaxIndex(5);
     }
 
     fetchUserData();
   }, [searchUser]);
 
+  const handleChangePage = (page: any) => {
+    setCurrent(page);
+    setMinIndex((page - 1) * 5);
+    setMaxIndex(page * 5);
+  }
+  if (!user) return <p>Loading</p>;
   return (
     <>
       <Head>
@@ -50,7 +66,15 @@ export default function Home() {
             </div>
           </div>
           <div className="repo-container">
-
+            {repoData && repoData.map((r : any, i : any) => i >= minIndex && i <= maxIndex && (
+              <p key={i}>{r.name}</p>
+            ))}
+            <Pagination
+              pageSize={5}
+              current={current}
+              total={repoData.length}
+              onChange={(page) => handleChangePage(page)}
+            />
           </div>
         </div>
       </main>

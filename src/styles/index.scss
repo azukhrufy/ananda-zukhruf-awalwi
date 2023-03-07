@@ -2,35 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./searchbox.scss";
+@import "./header.scss";
 
-@import './searchbox.scss';
-@import './header.scss';
+.content {
+  @apply flex flex-col justify-center mt-24 text-center sm:text-left sm:justify-start sm:px-10;
 
-.content{
-    @apply flex justify-center mt-24 text-center sm:text-left sm:justify-start sm:px-10;
+  .profile-container {
+    @apply flex flex-col items-center sm:flex-row gap-4;
 
-    .profile-container{
-        @apply flex flex-col items-center sm:flex-row gap-4;
-
-        .image-container{
-            @apply px-28 sm:px-10 sm:flex-initial;
-            img{
-                @apply rounded-full h-auto w-full;
-            }
-        }
-        .text-container{
-            @apply sm:flex-grow sm:min-w-[calc(100vw_-_30rem)];
-            h1{
-                @apply text-3xl font-bold;
-            }
-            h3{
-                @apply text-2xl font-normal text-brand-text-grey;
-            }
-            p{
-                @apply text-base font-normal text-brand-black;
-            }
-        }
-
-        
+    .image-container {
+      @apply px-28 sm:px-10 sm:flex-initial;
+      img {
+        @apply rounded-full h-auto w-full;
+      }
     }
+    .text-container {
+      @apply sm:flex-grow sm:min-w-[calc(100vw_-_20rem)];
+      h1 {
+        @apply text-3xl font-bold;
+      }
+      h3 {
+        @apply text-2xl font-normal text-brand-text-grey;
+      }
+      p {
+        @apply text-base font-normal text-brand-black;
+      }
+    }
+  }
+
+  .repo-container{
+    .ant-pagination{
+        @apply flex justify-center items-center;
+    }
+  }
 }
