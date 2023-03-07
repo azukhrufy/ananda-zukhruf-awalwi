@@ -1,23 +1,26 @@
 import Head from "next/head";
 import Image from "next/image";
 import { GithubService } from "@/services/GithubServices";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import TopHeader from "@/components/Navbar/TopHeader";
 import GithubIcon from "../../public/icons/github.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/state/store";
 
 export default function Home() {
   const githubService = new GithubService();
   const [user, setUser] = useState<any>();
+  const searchUser = useSelector((state: RootState) => state.searchUser.searchUserData);
 
   useEffect(() => {
     async function fetchUserData() {
-      const data = (await githubService.getUserData()).data;
+      const data = (await githubService.getUserData(searchUser)).data;
       setUser(data);
-      console.log(data);
     }
 
     fetchUserData();
-  }, []);
+  }, [searchUser]);
+
   return (
     <>
       <Head>

@@ -5,7 +5,7 @@ export class GithubService extends Service{
         super('https://api.github.com')
     }
 
-    getUserData() {
-        return this.get('/users/azukhrufy', this.response).catch((exception) => this.catch(exception));
+    getUserData(user: string) {
+        return this.get(`/users/${user}`, this.response).catch((exception) => this.catch(exception));
     }
 }

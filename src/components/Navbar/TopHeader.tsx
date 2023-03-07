@@ -2,6 +2,8 @@ import SearchBox from "../SearchBox/SearchBox";
 import MenuIcon from "../../../public/icons/menu.svg";
 import Image from "next/image";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { onSearch } from "@/state/SearchReducer";
 
 interface HeaderObj {
   content?: React.ReactNode;
@@ -12,6 +14,7 @@ const TopHeader = ({ content }: HeaderObj) => {
   const handleMenuClick = () => {
     setShow(!show);
   }
+  const dispatch = useDispatch();
   const handleChange = (e : any) => {
     if(e.key === 'Enter' || e.keyCode === 13 ){
       console.log('you press enter')
@@ -19,7 +22,9 @@ const TopHeader = ({ content }: HeaderObj) => {
   }
   const handleSubmit = (e : any) => {
     if(e.key === 'Enter' || e.keyCode === 13 ){
-      console.log('you press enter')
+      dispatch(onSearch(e.target.value));
+      // window.location.reload();
+      
     }
   }
   return (
