@@ -1,11 +1,45 @@
-import Head from 'next/head'
-import Image from 'next/image'
-// import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-
-// const inter = Inter({ subsets: ['latin'] })
+import Head from "next/head";
+import Image from "next/image";
+import { GithubService } from "@/services/GithubServices";
+import { useEffect, useMemo, useState } from "react";
+import TopHeader from "@/components/Navbar/TopHeader";
+import GithubIcon from "../../public/icons/github.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "@/state/store";
+import { Pagination, Button } from "antd";
+import List from "@/components/List/List";
 
 export default function Home() {
+  const githubService = new GithubService();
+  const [user, setUser] = useState<any>();
+  const [repoData, setRepoData] = useState<any>([]);
+  const [minIndex, setMinIndex] = useState(0);
+  const [maxIndex, setMaxIndex] = useState(0);
+  const [current, setCurrent] = useState(1);
+  const searchUser = useSelector(
+    (state: RootState) => state.searchUser.searchUserData
+  );
+
+  useEffect(() => {
+    async function fetchUserData() {
+      const data = (await githubService.getUserData(searchUser)).data;
+      const repo = (await githubService.getRepo(searchUser)).data;
+      setUser(data);
+      setRepoData(repo);
+      setMaxIndex(4);
+      setMinIndex(0);
+      setCurrent(1);
+    }
+
+    fetchUserData();
+  }, [searchUser]);
+
+  const handleChangePage = (page: any) => {
+    setCurrent(page);
+    setMinIndex((page - 1) * 4);
+    setMaxIndex(page * 4);
+  };
+  if (!user || !repoData) return <p>Loading</p>;
   return (
     <>
       <Head>
@@ -14,85 +48,61 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
+      <main>
+        <TopHeader
+          content={
+            <>
+              <Image src={GithubIcon.src} alt="icon" width={42} height={42} />
+              <h1>Github Viewer</h1>
+            </>
+          }
+        />
+        <div className="content">
+        {user.message == 'Not Found' && <div>User Not Found</div>}
+          <div className="profile-container">
+            <div className="image-container">
+              <img src={user.avatar_url} />
+            </div>
+            <div className="text-container">
+              <h1>{user.name}</h1>
+              <h3>{user.login}</h3>
+              <p>{user.bio}</p>
+              {user.html_url && (
+                <Button href={user.html_url} className="mt-4 max-w-4xl">
+                  See Profile on Github
+                </Button>
+              )}
+            </div>
+          </div>
+
+          <div className="repo-container">
+            {repoData.length > 0 && <h1 className="text-4xl font-bold ml-2 mt-5 mb-2">Repositories</h1>}
+          
+            { repoData && repoData.length > 0 &&
+              repoData.map(
+                (r: any, i: any) =>
+                  i >= minIndex &&
+                  i <= maxIndex && (
+                    <a key={i} href={r.html_url}>
+                      <List key={i}>
+                        <h1>{r.name}</h1>
+                        <p className="lang">{r.language}</p>
+                        <p>{r.description}</p>
+                      </List>
+                    </a>
+                  )
+              )}
+            {repoData && repoData.length > 0 && (
+              <Pagination
+                pageSize={4}
+                current={current}
+                total={repoData.length}
+                onChange={(page) => handleChangePage(page)}
               />
-            </a>
+            )}
           </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-          </a>
         </div>
       </main>
     </>
-  )
+  );
 }
