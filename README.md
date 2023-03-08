@@ -1,38 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Git Viewer
 
-First, run the development server:
+This application is using Github API to seeing github user repositories (only public repositories).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+## Get Started
+
+### Instal Application
+
+after move into the project file, run in terminal:
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+it will install all dependencies that are needed to run the application.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Run Application
+run in terminal :
+```
+npm run dev
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+it will be brings you to http://localhost:3000 (as default).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+**Client:** NextJS, Redux, TailwindCSS, Axios, Antd
 
-## Learn More
+**Service:** https://api.github.com
 
-To learn more about Next.js, take a look at the following resources:
+## Screenshoot
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<img width="309" alt="Screen Shot 2023-03-08 at 20 18 10" src="https://user-images.githubusercontent.com/36157404/223723386-6012904b-05cb-4bf3-87c3-151b76a132cf.png">
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<img width="592" alt="Screen Shot 2023-03-08 at 20 20 12" src="https://user-images.githubusercontent.com/36157404/223723739-65139656-4bc7-40f0-b6c9-f9c96d911acb.png">
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
