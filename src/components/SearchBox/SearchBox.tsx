@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import React, {LegacyRef, MutableRefObject, useRef} from 'react';
 import SearchIcon from '../../../public/icons/search.svg';
 
 interface SearchProps {
@@ -8,12 +9,14 @@ interface SearchProps {
   placeholder? : string;
   initialValue? : string;
   name: string;
+  innerRef? : any;
 }
 
-const SearchBox = ({ onChange, name, onClick, placeholder, onSubmit, initialValue }: SearchProps) => {
+const SearchBox = ({ onChange,innerRef, name, onClick, placeholder, onSubmit, initialValue }: SearchProps) => {
+  const inputRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
   return (
     <div className="searchbox">
-        <input name={name} placeholder={placeholder} onChange={onChange} value={initialValue} onKeyDown={onSubmit} />
+        <input ref={innerRef} name={name} placeholder={placeholder} onChange={onChange} value={initialValue} onKeyDown={onSubmit} />
         <div onClick={onClick}>
           <Image 
             src={SearchIcon.src}
