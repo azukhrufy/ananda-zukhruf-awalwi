@@ -13,7 +13,6 @@ export default function Home() {
   const githubService = new GithubService();
   const [user, setUser] = useState<any>();
   const [repoData, setRepoData] = useState<any>([]);
-  const [totalPage, setTotalPage] = useState<number>(0);
   const [minIndex, setMinIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
   const [current, setCurrent] = useState(1);
@@ -28,6 +27,8 @@ export default function Home() {
       setUser(data);
       setRepoData(repo);
       setMaxIndex(4);
+      setMinIndex(0);
+      setCurrent(1);
     }
 
     fetchUserData();
@@ -75,7 +76,9 @@ export default function Home() {
           </div>
 
           <div className="repo-container">
-            {repoData.length > 0 &&
+            {repoData.length > 0 && <h1 className="text-4xl font-bold ml-2 mt-5 mb-2">Repositories</h1>}
+          
+            { repoData && repoData.length > 0 &&
               repoData.map(
                 (r: any, i: any) =>
                   i >= minIndex &&

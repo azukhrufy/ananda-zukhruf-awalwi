@@ -12,4 +12,8 @@
   input:focus-visible {
     outline: none;
   }
+  
+  img {
+    @apply cursor-pointer;
+  }
 }

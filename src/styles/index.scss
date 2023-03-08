@@ -27,6 +27,9 @@
       p {
         @apply text-base font-normal text-brand-black;
       }
+      .ant-btn{
+        @apply static;
+      }
     }
   }
 

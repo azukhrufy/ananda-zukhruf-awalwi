@@ -1,4 +1,5 @@
-// import { MenuIcon } from "../Icons/MenuIcons";
+import Image from 'next/image';
+import SearchIcon from '../../../public/icons/search.svg';
 
 interface SearchProps {
   onChange?: (key: any) => void;
@@ -12,10 +13,15 @@ interface SearchProps {
 const SearchBox = ({ onChange, name, onClick, placeholder, onSubmit, initialValue }: SearchProps) => {
   return (
     <div className="searchbox">
-      {/* <form onSubmit={onSubmit}> */}
         <input name={name} placeholder={placeholder} onChange={onChange} value={initialValue} onKeyDown={onSubmit} />
-        {/* <div onClick={onClick}>{MenuIcon.search}</div> */}
-      {/* </form> */}
+        <div onClick={onClick}>
+          <Image 
+            src={SearchIcon.src}
+            alt='search'
+            width={18}
+            height={18}
+          />
+        </div>
     </div>
   );
 };
